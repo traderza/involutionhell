@@ -27,7 +27,9 @@ ENV NODE_ENV=production \
     HOSTNAME=0.0.0.0 \
     PORT=3000
 WORKDIR /app
-RUN corepack enable
 COPY --from=builder /app /app
+# Resolve pnpm into the corepack cache at image build time, so the container
+# never needs registry.npmjs.org to start.
+RUN corepack enable && pnpm --version
 EXPOSE 3000
 CMD ["pnpm", "start"]
