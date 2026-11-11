@@ -1,3 +1,4 @@
+name: involutionhell
 # Self-hosted Involution Hell (fork: traderza/involutionhell, branch selfhost).
 # The published port is bound to the Tailscale interface only, so the site is
 # reachable inside the tailnet and never on the public IP.
