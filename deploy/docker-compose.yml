@@ -1,0 +1,19 @@
+# Self-hosted Involution Hell (fork: traderza/involutionhell, branch selfhost).
+# The published port is bound to the Tailscale interface only, so the site is
+# reachable inside the tailnet and never on the public IP.
+# Change the left-hand address to this host's tailnet IP (`tailscale ip -4`).
+services:
+  web:
+    image: involutionhell:local
+    container_name: involutionhell
+    restart: unless-stopped
+    ports:
+      - "100.118.87.29:3010:3000"
+    environment:
+      NODE_ENV: production
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch(\"http://127.0.0.1:3000/\").then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
